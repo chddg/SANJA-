@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>خدمات متابعين عراقية - رصيد الحساب</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+    body {
+      font-family: 'Cairo', Arial, sans-serif;
+      background: #121212;
+      margin: 0; padding: 0;
+      direction: rtl;
+      color: #d4af37;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    @keyframes fadeInZoom {
+      0% {opacity: 0; transform: scale(0.9);}
+      100% {opacity: 1; transform: scale(1);}
+    }
+    @keyframes glowMove {
+      0%, 100% {box-shadow: 0 0 8px transparent; border-color: #3e3e3e;}
+      50% {box-shadow: 0 0 20px 4px #d4af37; border-color: #d4af37;}
+    }
+    .header {
+      background: linear-gradient(270deg, #3a1c00, #d4af37, #6b5200);
+      background-size: 600% 600%;
+      animation: gradientBG 12s ease infinite;
+      color: #fff;
+      padding: 18px 0;
+      text-align: center;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.5);
+      font-weight: 700;
+      user-select: none;
+    }
+    .balance {
+      max-width: 900px;
+      margin: 10px auto 20px auto;
+      padding: 15px 25px;
+      background: linear-gradient(270deg, #d4af37, #6b5200, #d4af37);
+      background-size: 600% 600%;
+      animation: gradientBG 10s ease infinite;
+      border-radius: 12px;
+      color: #121212;
+      font-size: 1.5rem;
+      font-weight: 900;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.8);
+      text-align: center;
+      user-select: none;
+      filter: drop-shadow(0 0 5px #d4af37);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .balance-btns {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    #rechargeBtn {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(212, 175, 55, 0.8);
+      transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+      user-select: none;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      width: 160px;
+      background: linear-gradient(135deg, #6b5200, #d4af37);
+      color: #121212;
+    }
+    #rechargeBtn:hover {
+      background: linear-gradient(135deg, #d4af37, #6b5200);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 1);
+    }
+    #sendToFriendBtn {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #b71c1c, #ff5252);
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(183, 28, 28, 0.5);
+      transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+      user-select: none;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      width: 160px;
+    }
+    #sendToFriendBtn:hover {
+      background: linear-gradient(135deg, #ff5252, #b71c1c);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(183, 28, 28, 0.8);
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 0 20px 20px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #1e1e1e;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      border: 1.5px solid #3e3e3e;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0; /* مهم: حتى الصورة تملأ كل المساحة */
+      text-align: center;
+      color: #d4af37;
+      transition:
+        transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.35s,
+        border-color 0.35s,
+        opacity 0.6s,
+        filter 0.6s;
+      animation: fadeInZoom 0.8s ease forwards, glowMove 3s linear infinite;
+      opacity: 0;
+      transform-origin: center;
+      user-select: none;
+      animation-delay: 0s, var(--glow-delay);
+      cursor: pointer;
+    }
+    .card:nth-child(1) { --glow-delay: 0s; }
+    .card:nth-child(2) { --glow-delay: 0.3s; }
+    .card:nth-child(3) { --glow-delay: 0.6s; }
+    .card:nth-child(4) { --glow-delay: 0.9s; }
+    .card:hover {
+      transform: translateY(-7px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.9);
+      border-color: #d4af37;
+      animation-play-state: paused;
+      box-shadow: 0 0 25px 6px #d4af37;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      margin: 0;
+      box-shadow: 0 2px 12px 0 #d4af3722;
+      background: #fff;
+      user-select: none;
+      transition: filter 0.3s, box-shadow 0.3s;
+    }
+    .card:hover img {
+      filter: brightness(1.06) drop-shadow(0 0 12px #d4af37cc);
+    }
+    .tiktok-text {
+      display: none;
+    }
+    /* ... باقي التنسيقات كما هي ... */
+    /* عداد الزوار + responsive ... أبقيت كل شيء كما كان */
+    .modal-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(18, 18, 18, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      user-select: none;
+    }
+    .modal {
+      background: #1e1e1e;
+      border-radius: 16px;
+      padding: 30px 35px;
+      max-width: 360px;
+      width: 90%;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+      text-align: center;
+      color: #d4af37;
+      position: relative;
+      animation: fadeInZoom 0.4s ease forwards;
+      user-select: text;
+    }
+    .modal h2 {
+      margin-bottom: 24px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+    .modal input[type="text"] {
+      width: 100%;
+      padding: 14px 15px;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      border: 2px solid #d4af37;
+      background: #121212;
+      color: #d4af37;
+      outline: none;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .modal input[type="text"]:focus {
+      border-color: #fff;
+      box-shadow: 0 0 10px #d4af37;
+    }
+    .modal button {
+      background: linear-gradient(135deg, #d4af37, #6b5200);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-weight: 700;
+      color: #121212;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.9);
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+      margin: 0 8px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .modal button:hover {
+      background: linear-gradient(135deg, #6b5200, #d4af37);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .modal .close-btn {
+      position: absolute;
+      top: 12px;
+      left: 18px;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      color: #d4af37;
+      cursor: pointer;
+      transition: color 0.3s;
+      user-select: none;
+    }
+    .modal .close-btn:hover {
+      color: #fff;
+    }
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(212, 175, 55, 0.3);
+      border-radius: 50%;
+      border-top-color: #d4af37;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    #errorMsg {
+      background-color: #8b0000;
+      color: #ffdddd;
+      border: 1.5px solid #ff4c4c;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      box-shadow: 0 0 15px #ff4c4ccc;
+      text-align: center;
+      user-select: none;
+      display: none;
+      animation: slideDownFadeIn 0.4s;
+    }
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      background: linear-gradient(135deg, #4caf50, #2e7d32);
+      color: #fff;
+      padding: 16px 30px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 15px rgba(76, 175, 80, 0.7);
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      transition: transform 0.4s, opacity 0.4s;
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #toast svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+    }
+    #visitorCounter {
+      max-width: 900px;
+      margin: 0 auto 35px auto;
+      user-select: none;
+      letter-spacing: 1.2px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .visitor-flex {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(90deg, #1e1e1e 85%, #d4af37 115%);
+      border-radius: 16px;
+      box-shadow: 0 2px 14px #d4af3720, 0 0 0 2.5px #1e1e1e;
+      padding: 8px 20px 8px 14px;
+      border: 2px solid #d4af37cc;
+      width: fit-content;
+      min-width: 220px;
+      justify-content: flex-start;
+    }
+    .visitor-icon-wrap {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #d4af37 60%, #6b5200 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px 2.5px #d4af3755, 0 0 0 2.5px #1e1e1e;
+      animation: visitorGlow 2.2s infinite alternate;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    @keyframes visitorGlow {
+      0% { box-shadow: 0 0 8px 1.5px #d4af3755, 0 0 0 2.5px #1e1e1e;}
+      100% { box-shadow: 0 0 18px 4px #d4af37ee, 0 0 0 2.5px #6b5200;}
+    }
+    .visitor-icon {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+      filter: drop-shadow(0 0 3px #6b5200);
+      animation: iconBounce 1.5s infinite alternate;
+    }
+    @keyframes iconBounce {
+      0% { transform: translateY(0);}
+      100% { transform: translateY(-4px);}
+    }
+    .visitor-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1.5px;
+    }
+    .visitor-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #f0d97a;
+      margin-bottom: 0;
+      text-shadow: 0 0 4px #d4af37cc;
+      letter-spacing: 0.9px;
+    }
+    .visitor-count {
+      font-size: 1.4rem;
+      font-family: 'Cairo', Arial, sans-serif;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 1px 10px #d4af37;
+      letter-spacing: 1.2px;
+      direction: ltr;
+      min-width: 70px;
+      background: linear-gradient(90deg, #1e1e1e 85%, #d4af37 120%);
+      border-radius: 10px;
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 12px 1px #d4af3722;
+      padding: 3px 12px;
+      margin-top: 1px;
+      margin-bottom: 0;
+      transition: color 0.3s, text-shadow 0.3s, background 0.3s;
+      animation: countPop 0.7s;
+      display: inline-block;
+      text-align: center;
+    }
+    @keyframes countPop {
+      0% { transform: scale(0.85); color: #d4af37; text-shadow: 0 0 0 #fff;}
+      60% { transform: scale(1.12); color: #fff; text-shadow: 0 0 12px #d4af37;}
+      100% { transform: scale(1); color: #fff; text-shadow: 0 1px 10px #d4af37;}
+    }
+    .visitor-loading {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(212, 175, 55, 0.3);
+      border-radius: 50%;
+      border-top-color: #d4af37;
+      animation: spin 1s linear infinite;
+      margin-right: 4px;
+    }
+    @media (max-width: 600px) {
+      .visitor-flex {
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px 12px;
+        min-width: 0;
+        width: 95%;
+      }
+      .visitor-count {
+        font-size: 1.1rem;
+        padding: 2px 8px;
+        min-width: 60px;
+      }
+      .visitor-icon-wrap {
+        width: 30px;
+        height: 30px;
+      }
+      .visitor-icon {
+        width: 16px;
+        height: 16px;
+      }
+      .balance-btns {
+        align-items: stretch;
+      }
+      #sendToFriendBtn, #rechargeBtn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header" aria-label="عنوان الصفحة">
+    خدمات متابعين عراقية
+  </div>
+
+  <!-- عداد الزوار المحسن -->
+  <div id="visitorCounter" aria-live="polite" aria-atomic="true" aria-label="عدد الزوار">
+    <div class="visitor-flex">
+      <span class="visitor-icon-wrap" aria-hidden="true">
+        <svg class="visitor-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 12c2.7 0 4.5-2.1 4.5-4.5S14.7 3 12 3 7.5 5.1 7.5 7.5 9.3 12 12 12zm0 2c-3 0-9 1.5-9 4.5V22h18v-3.5c0-3-6-4.5-9-4.5z"/>
+        </svg>
+      </span>
+      <div class="visitor-info">
+        <span class="visitor-label">عدد الزوار</span>
+        <span id="visitorCount" class="visitor-count" aria-live="polite" aria-atomic="true">
+          <span class="visitor-loading" aria-hidden="true"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="balance" id="balanceDisplay" aria-live="polite" aria-atomic="true">
+    <span id="balanceText">رصيد الحساب: <span class="loading" aria-hidden="true"></span></span>
+    <div class="balance-btns">
+      <button id="rechargeBtn" aria-label="تعبئة رصيد">تعبئة رصيد</button>
+      <button id="sendToFriendBtn" aria-label="إرسال رصيد لصديق">إرسال رصيد لصديق</button>
+    </div>
+  </div>
+
+  <div class="container" id="servicesContainer" aria-label="خدمات المتابعين">
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <img src="https://i.imgur.com/dAG3jst.gif" alt="صورة الخدمة" />
+    </div>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <img src="https://i.imgur.com/snjIdOJ.gif" alt="صورة الخدمة" />
+    </div>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <img src="https://i.imgur.com/qkngBBU.gif" alt="صورة الخدمة" />
+    </div>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <img src="https://i.imgur.com/qkngBBU.gif" alt="صورة الخدمة" />
+    </div>
+  </div>
+
+  <!-- مودال تعبئة الرصيد -->
+  <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal">
+      <button class="close-btn" id="closeModalBtn" title="إغلاق" aria-label="إغلاق النافذة">&times;</button>
+      <h2 id="modalTitle">تعبئة رصيد الحساب</h2>
+      <div id="errorMsg" role="alert" aria-live="assertive"></div>
+      <input type="text" id="codeInput" placeholder="أدخل كود التعبئة" maxlength="20" aria-describedby="codeHelp" />
+      <div id="codeHelp" style="font-size:0.85rem; color:#f0d97a; margin-bottom:15px;">
+        أدخل كود التعبئة لإضافة الرصيد إلى حسابك
+      </div>
+      <button id="confirmBtn">تأكيد</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" role="alert" aria-live="assertive" aria-atomic="true" aria-label="إشعار">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+    </svg>
+    <span id="toastMessage">تمت إضافة الرصيد إلى حسابك بنجاح!</span>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+    import { getDatabase, ref, onValue, get, runTransaction, update } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyByTgR1kNZCbD8uf11gsB-RhYC5YdmOCcA",
+      authDomain: "subscription-sales-services.firebaseapp.com",
+      databaseURL: "https://subscription-sales-services-default-rtdb.firebaseio.com",
+      projectId: "subscription-sales-services",
+      storageBucket: "subscription-sales-services.appspot.com",
+      messagingSenderId: "234403660342",
+      appId: "1:234403660342:web:888a34999f05dee6c0ce97",
+      measurementId: "G-LHMEVVNBH9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const balanceText = document.getElementById('balanceText');
+    const rechargeBtn = document.getElementById('rechargeBtn');
+    const sendToFriendBtn = document.getElementById('sendToFriendBtn');
+    const modalBg = document.getElementById('modalBg');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const codeInput = document.getElementById('codeInput');
+    const errorMsg = document.getElementById('errorMsg');
+
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    let currentUser = null;
+
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function showError(element, message) {
+      element.textContent = message;
+      element.style.display = 'block';
+      element.style.opacity = '1';
+      setTimeout(() => {
+        element.style.opacity = '0';
+        setTimeout(() => {
+          element.style.display = 'none';
+        }, 500);
+      }, 4000);
+    }
+
+    function showToast(message) {
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+        const balanceRef = ref(db, `users/${user.uid}/balance`);
+        onValue(balanceRef, (snapshot) => {
+          const balance = snapshot.val() || 0;
+          balanceText.innerHTML = `رصيد الحساب: ${formatNumber(balance)} دولار`;
+        });
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
+
+    rechargeBtn.addEventListener('click', () => {
+      errorMsg.style.display = 'none';
+      codeInput.value = '';
+      modalBg.style.display = 'flex';
+      codeInput.focus();
+    });
+
+    sendToFriendBtn.addEventListener('click', () => {
+      window.location.href = "send-balance.html";
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modalBg.style.display = 'none';
+      errorMsg.style.display = 'none';
+    });
+
+    modalBg.addEventListener('click', (e) => {
+      if (e.target === modalBg) {
+        modalBg.style.display = 'none';
+        errorMsg.style.display = 'none';
+      }
+    });
+
+    confirmBtn.addEventListener('click', async () => {
+      const code = codeInput.value.trim();
+      if (!code) {
+        showError(errorMsg, 'يرجى إدخال كود التعبئة');
+        return;
+      }
+      if (!currentUser) {
+        showError(errorMsg, 'يجب تسجيل الدخول أولاً');
+        return;
+      }
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'جاري التحقق...';
+      errorMsg.style.display = 'none';
+
+      const codeRef = ref(db, `codes/${code}`);
+      const balanceRef = ref(db, `users/${currentUser.uid}/balance`);
+
+      try {
+        const snapshot = await get(codeRef);
+        if (!snapshot.exists()) {
+          showError(errorMsg, 'الكود غير صالح أو غير موجود');
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = 'تأكيد';
+          return;
+        }
+        const codeData = snapshot.val();
+        if (codeData.used) {
+          showError(errorMsg, 'هذا الكود مستخدم مسبقاً ولا يمكن إعادة استخدامه');
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = 'تأكيد';
+          return;
+        }
+        const amount = codeData.amount || 0;
+        await runTransaction(balanceRef, (currentBalance) => {
+          if (currentBalance === null) return amount;
+          return currentBalance + amount;
+        });
+        await update(codeRef, {
+          used: true,
+          usedAt: new Date().toISOString(),
+          usedBy: currentUser.uid,
+          usedByEmail: currentUser.email || ""
+        });
+        showToast(`تمت إضافة ${amount} دولار إلى رصيد حسابك بنجاح!`);
+        modalBg.style.display = 'none';
+      } catch (error) {
+        console.error(error);
+        showError(errorMsg, 'حدث خطأ أثناء تحديث الرصيد، يرجى المحاولة لاحقاً.');
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'تأكيد';
+      }
+    });
+
+    // عداد الزوار - Firebase
+    const visitorCountSpan = document.getElementById('visitorCount');
+    const visitorsRef = ref(db, 'siteStats/visitorsCount');
+
+    // تحديث العداد في الصفحة عند تغييره في قاعدة البيانات مع تأثير بصري
+    let lastCount = 0;
+    function animateCount(newCount) {
+      if (lastCount !== newCount) {
+        visitorCountSpan.classList.remove('countPop');
+        void visitorCountSpan.offsetWidth; // إعادة تشغيل الأنيميشن
+        visitorCountSpan.classList.add('countPop');
+      }
+      visitorCountSpan.textContent = formatNumber(newCount);
+      lastCount = newCount;
+    }
+    onValue(visitorsRef, (snapshot) => {
+      const count = snapshot.val() || 0;
+      animateCount(count);
+      // إزالة اللودينج إذا كان موجوداً
+      const loading = visitorCountSpan.querySelector('.visitor-loading');
+      if (loading) loading.remove();
+    });
+
+    // زيادة العداد عند كل زيارة (مرة واحدة فقط لكل جهاز في اليوم)
+    function increaseVisitorCount() {
+      const today = new Date().toISOString().slice(0, 10); // yyyy-mm-dd
+      const lastVisit = localStorage.getItem('lastVisitDate');
+      if (lastVisit !== today) {
+        runTransaction(visitorsRef, (current) => {
+          return (current || 0) + 1;
+        });
+        localStorage.setItem('lastVisitDate', today);
+      }
+    }
+    increaseVisitorCount();
+  </script>
+</body>
+</html>
