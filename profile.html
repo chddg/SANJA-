@@ -61,9 +61,15 @@
       align-items: center;
       gap: 15px;
     }
-    #rechargeBtn, #sendToFriendBtn {
+    .balance-btns {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    #rechargeBtn {
       border: none;
-      padding: 8px 18px;
+      padding: 12px 18px;
       border-radius: 12px;
       font-weight: 700;
       cursor: pointer;
@@ -74,11 +80,8 @@
       letter-spacing: 1px;
       white-space: nowrap;
       width: 160px;
-    }
-    #rechargeBtn {
       background: linear-gradient(135deg, #6b5200, #d4af37);
       color: #121212;
-      margin-bottom: 10px;
     }
     #rechargeBtn:hover {
       background: linear-gradient(135deg, #d4af37, #6b5200);
@@ -87,13 +90,26 @@
       box-shadow: 0 6px 20px rgba(212, 175, 55, 1);
     }
     #sendToFriendBtn {
-      background: linear-gradient(135deg, #3b5998, #8b9dc3);
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #b71c1c, #ff5252);
       color: #fff;
+      box-shadow: 0 3px 8px rgba(183, 28, 28, 0.5);
+      transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+      user-select: none;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      width: 160px;
     }
     #sendToFriendBtn:hover {
-      background: linear-gradient(135deg, #8b9dc3, #3b5998);
+      background: linear-gradient(135deg, #ff5252, #b71c1c);
+      color: #fff;
       transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(59, 89, 152, 1);
+      box-shadow: 0 6px 20px rgba(183, 28, 28, 0.8);
     }
     .container {
       max-width: 900px;
@@ -114,7 +130,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 12px;
+      padding: 0; /* مهم: حتى الصورة تملأ كل المساحة */
       text-align: center;
       color: #d4af37;
       transition:
@@ -142,20 +158,16 @@
       box-shadow: 0 0 25px 6px #d4af37;
     }
     .card img {
-      max-width: 100%;
-      max-height: 120px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 14px;
-      filter: brightness(0.96);
-      transition: filter 0.3s, box-shadow 0.3s;
-      margin-bottom: 0;
-      margin-top: 0;
-      user-select: none;
+      display: block;
+      margin: 0;
       box-shadow: 0 2px 12px 0 #d4af3722;
       background: #fff;
-      width: 100%;
-      height: 120px;
-      display: block;
+      user-select: none;
+      transition: filter 0.3s, box-shadow 0.3s;
     }
     .card:hover img {
       filter: brightness(1.06) drop-shadow(0 0 12px #d4af37cc);
@@ -163,6 +175,8 @@
     .tiktok-text {
       display: none;
     }
+    /* ... باقي التنسيقات كما هي ... */
+    /* عداد الزوار + responsive ... أبقيت كل شيء كما كان */
     .modal-bg {
       position: fixed;
       top: 0; left: 0;
@@ -305,7 +319,6 @@
       height: 24px;
       fill: #fff;
     }
-    /* عداد الزوار المحسن ... (باقي التنسيق كما هو) */
     #visitorCounter {
       max-width: 900px;
       margin: 0 auto 35px auto;
@@ -409,9 +422,6 @@
       animation: spin 1s linear infinite;
       margin-right: 4px;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
     @media (max-width: 600px) {
       .visitor-flex {
         flex-direction: column;
@@ -432,6 +442,12 @@
       .visitor-icon {
         width: 16px;
         height: 16px;
+      }
+      .balance-btns {
+        align-items: stretch;
+      }
+      #sendToFriendBtn, #rechargeBtn {
+        width: 100%;
       }
     }
   </style>
@@ -460,23 +476,24 @@
 
   <div class="balance" id="balanceDisplay" aria-live="polite" aria-atomic="true">
     <span id="balanceText">رصيد الحساب: <span class="loading" aria-hidden="true"></span></span>
-    <div style="display:flex; flex-direction: column; gap: 10px; width: 160px;">
+    <div class="balance-btns">
       <button id="rechargeBtn" aria-label="تعبئة رصيد">تعبئة رصيد</button>
       <button id="sendToFriendBtn" aria-label="إرسال رصيد لصديق">إرسال رصيد لصديق</button>
     </div>
   </div>
+
   <div class="container" id="servicesContainer" aria-label="خدمات المتابعين">
     <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <img src="https://i.imgur.com/2GQxIVd.jpeg" alt="صورة الخدمة" />
+      <img src="https://i.imgur.com/dAG3jst.gif" alt="صورة الخدمة" />
     </div>
     <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <img src="https://i.imgur.com/2GQxIVd.jpeg" alt="صورة الخدمة" />
+      <img src="https://i.imgur.com/snjIdOJ.gif" alt="صورة الخدمة" />
     </div>
     <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <img src="https://i.imgur.com/2GQxIVd.jpeg" alt="صورة الخدمة" />
+      <img src="https://i.imgur.com/qkngBBU.gif" alt="صورة الخدمة" />
     </div>
     <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <img src="https://i.imgur.com/2GQxIVd.jpeg" alt="صورة الخدمة" />
+      <img src="https://i.imgur.com/qkngBBU.gif" alt="صورة الخدمة" />
     </div>
   </div>
 
@@ -580,6 +597,10 @@
       codeInput.focus();
     });
 
+    sendToFriendBtn.addEventListener('click', () => {
+      window.location.href = "send-balance.html";
+    });
+
     closeModalBtn.addEventListener('click', () => {
       modalBg.style.display = 'none';
       errorMsg.style.display = 'none';
@@ -590,10 +611,6 @@
         modalBg.style.display = 'none';
         errorMsg.style.display = 'none';
       }
-    });
-
-    sendToFriendBtn.addEventListener('click', () => {
-      window.location.href = 'jk.html';
     });
 
     confirmBtn.addEventListener('click', async () => {
